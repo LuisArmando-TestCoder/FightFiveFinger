@@ -60,18 +60,16 @@ const Training: React.FC<TrainingProps> = ({ setScreen }) => {
         return <p className="text-9xl font-bold">{countdown}</p>;
       case 'playing':
         return (
-          <>
+          <motion.div 
+            className="w-full h-full flex flex-col items-center justify-center cursor-pointer"
+            onClick={handleClick}
+            whileTap={{ scale: 0.99 }}
+            transition={{ duration: 0.08 }}
+          >
             <p className="absolute top-4 right-4 text-2xl font-mono">{timer.toFixed(0)}s</p>
-            <motion.button
-              id="click-button"
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.08 }}
-              className="w-64 h-64 bg-red-600 rounded-full text-white text-4xl font-bold"
-              onClick={handleClick}
-            >
-              {clickCount}
-            </motion.button>
-          </>
+            <p className="text-9xl font-bold select-none">{clickCount}</p>
+            <p className="absolute bottom-4 text-lg text-gray-400 select-none">Tap anywhere</p>
+          </motion.div>
         );
       case 'finished':
         return (

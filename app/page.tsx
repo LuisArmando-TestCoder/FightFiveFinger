@@ -86,8 +86,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 gap-y-4 bg-gray-900 text-white">
-      <h1 className="text-4xl font-bold mb-8">World Click Fight</h1>
+    <main className="flex min-h-screen flex-col items-center justify-center p-8 sm:p-12 md:p-24 gap-y-4 bg-gray-900 text-white">
+      <h1 className="text-4xl font-bold mb-8 text-center">World Click Fight</h1>
       {userAddress ? (
         <AnimatePresence mode="wait">
           {renderScreen()}

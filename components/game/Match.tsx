@@ -121,7 +121,7 @@ const Match: React.FC<MatchProps> = ({ setScreen }) => {
       case 'betting':
         return (
           <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4">Place Your Bet</h2>
+            <h2 className="text-3xl font-bold mb-4">Set Your Wager</h2>
             <div className="flex items-center justify-center mb-6">
               <input
                 type="number"
@@ -132,20 +132,32 @@ const Match: React.FC<MatchProps> = ({ setScreen }) => {
               <span className="ml-4 text-2xl font-bold">COIN</span>
             </div>
             <motion.button whileTap={{ scale: 0.97 }} transition={{ duration: 0.12 }} onClick={handleConfirmBet} className="px-8 py-3 bg-green-600 text-lg font-semibold rounded-lg">
-              Confirm Bet
+              Confirm Wager
             </motion.button>
              <button onClick={() => setScreen('lobby')} className="block mt-4 mx-auto text-sm text-gray-400 hover:underline">Back to Lobby</button>
           </div>
         );
       case 'waiting_opponent':
-        return <p className="text-2xl animate-pulse">Waiting for opponent...</p>;
+        return (
+            <div className="text-center">
+                <p className="text-2xl animate-pulse mb-6">Waiting for opponent...</p>
+                <motion.button whileTap={{ scale: 0.97 }} transition={{ duration: 0.12 }} onClick={() => setScreen('lobby')} className="px-6 py-2 bg-red-600 text-white font-semibold rounded-lg">
+                    Cancel (Fight Off)
+                </motion.button>
+            </div>
+        );
       case 'countdown':
         return <p className="text-9xl font-bold">{countdown > 0 ? countdown : 'FIGHT!'}</p>;
       case 'playing':
         return (
-            <div className="w-full h-full flex flex-col items-center justify-center">
+            <motion.div 
+                className="w-full h-full flex flex-col items-center justify-center cursor-pointer"
+                onClick={handleClick}
+                whileTap={{ scale: 0.995 }} // Less aggressive scale for the whole screen
+                transition={{ duration: 0.08 }}
+            >
                 <p className="absolute top-4 text-2xl font-mono">{timer.toFixed(0)}s</p>
-                <div className="w-full flex justify-around items-center">
+                <div className="w-full flex justify-around items-center select-none">
                     <div className="text-center">
                         <p className="text-lg">You</p>
                         <p className="text-6xl font-bold">{playerClicks}</p>
@@ -155,15 +167,8 @@ const Match: React.FC<MatchProps> = ({ setScreen }) => {
                         <p className="text-6xl font-bold">{opponentClicks}</p>
                     </div>
                 </div>
-                <motion.button
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.08 }}
-                    className="absolute bottom-10 w-48 h-24 bg-blue-600 rounded-lg text-white text-2xl font-bold"
-                    onClick={handleClick}
-                >
-                    Click!
-                </motion.button>
-            </div>
+                <p className="absolute bottom-4 text-lg text-gray-400 select-none">Tap anywhere</p>
+            </motion.div>
         );
     case 'finished':
         const playerWon = playerClicks > opponentClicks;
