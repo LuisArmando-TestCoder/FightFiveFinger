@@ -6,9 +6,10 @@ import { MiniKit } from "@worldcoin/minikit-js";
 import Lobby from "@/components/game/Lobby";
 import Training from "@/components/game/Training";
 import Match from "@/components/game/Match";
+import Challenge from "@/components/game/Challenge";
 import ScreenTransition from "@/components/ui/ScreenTransition";
 
-type Screen = 'lobby' | 'training' | 'match' | 'results';
+type Screen = 'lobby' | 'training' | 'match' | 'results' | 'challenge';
 
 export default function Home() {
   const [userAddress, setUserAddress] = useState<string | null>(null);
@@ -17,9 +18,22 @@ export default function Home() {
 
   useEffect(() => {
     setIsMounted(true);
-    // Initialize MiniKit or check for existing session if needed
-    // For now, we just ensure the component is mounted before checking MiniKit
-  }, []);
+    
+    // Check for a room_id in the URL to handle challenges
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomId = urlParams.get('room_id');
+    if (roomId) {
+      console.log(`Joining room: ${roomId}`);
+      // We need to be logged in to join a match
+      if (userAddress) {
+        setScreen('match');
+      } else {
+        // If not logged in, we could potentially store the room ID
+        // and redirect after login, but for now we'll just log it.
+        console.log("User must log in to join the match.");
+      }
+    }
+  }, [userAddress]); // Rerun this effect if the user logs in
 
   const signInWithWallet = async () => {
     if (isMounted && !MiniKit.isInstalled()) {
@@ -79,6 +93,8 @@ export default function Home() {
         return <ScreenTransition key="training"><Training setScreen={setScreen} /></ScreenTransition>;
       case 'match':
         return <ScreenTransition key="match"><Match setScreen={setScreen} /></ScreenTransition>;
+      case 'challenge':
+        return <ScreenTransition key="challenge"><Challenge setScreen={setScreen} /></ScreenTransition>;
       case 'lobby':
       default:
         return <ScreenTransition key="lobby"><Lobby userAddress={userAddress} setScreen={setScreen} /></ScreenTransition>;

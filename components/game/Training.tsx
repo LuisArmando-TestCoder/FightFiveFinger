@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
+import { Dispatch, SetStateAction } from 'react';
+
+type Screen = 'lobby' | 'training' | 'match' | 'results' | 'challenge';
 
 interface TrainingProps {
-  setScreen: (screen: 'lobby') => void;
+  setScreen: Dispatch<SetStateAction<Screen>>;
 }
 
 type GameState = 'idle' | 'countdown' | 'playing' | 'finished';

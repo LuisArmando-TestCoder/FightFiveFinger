@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Dispatch, SetStateAction } from 'react';
 
-type Screen = 'lobby' | 'training' | 'match' | 'results';
+type Screen = 'lobby' | 'training' | 'match' | 'results' | 'challenge';
 
 interface LobbyProps {
   userAddress: string;
@@ -50,7 +50,7 @@ const Lobby: React.FC<LobbyProps> = ({ userAddress, setScreen }) => {
           whileTap={{ scale: 0.97 }}
           transition={{ duration: 0.12 }}
           className="w-full px-4 py-3 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition-colors"
-          // onClick={() => setScreen('challenge')}
+          onClick={() => setScreen('challenge')}
         >
           Challenge a Friend
         </motion.button>

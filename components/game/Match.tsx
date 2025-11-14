@@ -2,7 +2,7 @@ import React, { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { motion } from 'framer-motion';
 import { MiniKit, tokenToDecimals, Tokens } from '@worldcoin/minikit-js';
 
-type Screen = 'lobby' | 'training' | 'match' | 'results';
+type Screen = 'lobby' | 'training' | 'match' | 'results' | 'challenge';
 
 interface MatchProps {
   setScreen: Dispatch<SetStateAction<Screen>>;
