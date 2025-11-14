@@ -4,12 +4,15 @@ import { Dispatch, SetStateAction } from 'react';
 
 type Screen = 'lobby' | 'training' | 'match' | 'results' | 'challenge';
 
+type MatchType = 'quick' | 'custom';
+
 interface LobbyProps {
   userAddress: string;
   setScreen: Dispatch<SetStateAction<Screen>>;
+  setMatchType: Dispatch<SetStateAction<MatchType>>;
 }
 
-const Lobby: React.FC<LobbyProps> = ({ userAddress, setScreen }) => {
+const Lobby: React.FC<LobbyProps> = ({ userAddress, setScreen, setMatchType }) => {
   // Mock data for now
   const userBalance = "1,234";
   const clickRate = "7.8 CPS";
@@ -58,9 +61,12 @@ const Lobby: React.FC<LobbyProps> = ({ userAddress, setScreen }) => {
           whileTap={{ scale: 0.97 }}
           transition={{ duration: 0.12 }}
           className="w-full px-4 py-3 bg-purple-600 text-white font-semibold rounded-lg shadow-md hover:bg-purple-700 transition-colors"
-          onClick={() => setScreen('match')}
+          onClick={() => {
+            setMatchType('quick');
+            setScreen('match');
+          }}
         >
-          Find Match
+          Find Match (1 WLD)
         </motion.button>
       </div>
     </div>

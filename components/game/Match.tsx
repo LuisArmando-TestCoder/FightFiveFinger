@@ -3,20 +3,29 @@ import { motion } from 'framer-motion';
 import { MiniKit, tokenToDecimals, Tokens } from '@worldcoin/minikit-js';
 
 type Screen = 'lobby' | 'training' | 'match' | 'results' | 'challenge';
+type MatchType = 'quick' | 'custom';
 
 interface MatchProps {
   setScreen: Dispatch<SetStateAction<Screen>>;
+  matchType: MatchType;
 }
 
 type MatchState = 'betting' | 'waiting_opponent' | 'countdown' | 'playing' | 'finished';
 
-const Match: React.FC<MatchProps> = ({ setScreen }) => {
+const Match: React.FC<MatchProps> = ({ setScreen, matchType }) => {
   const [matchState, setMatchState] = useState<MatchState>('betting');
-  const [betAmount, setBetAmount] = useState('10');
+  const [betAmount, setBetAmount] = useState(matchType === 'quick' ? '1' : '10');
   const [countdown, setCountdown] = useState(3);
   const [timer, setTimer] = useState(5); // 5-second match
   const [playerClicks, setPlayerClicks] = useState(0);
   const [opponentClicks, setOpponentClicks] = useState(0); // Simulated opponent
+
+  useEffect(() => {
+    // If this is a quick match, skip the betting screen and go straight to payment
+    if (matchType === 'quick' && matchState === 'betting') {
+      handleConfirmBet();
+    }
+  }, [matchType, matchState]);
 
   // Countdown logic
   useEffect(() => {

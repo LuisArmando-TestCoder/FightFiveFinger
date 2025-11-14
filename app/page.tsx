@@ -10,10 +10,12 @@ import Challenge from "@/components/game/Challenge";
 import ScreenTransition from "@/components/ui/ScreenTransition";
 
 type Screen = 'lobby' | 'training' | 'match' | 'results' | 'challenge';
+type MatchType = 'quick' | 'custom';
 
 export default function Home() {
   const [userAddress, setUserAddress] = useState<string | null>(null);
   const [screen, setScreen] = useState<Screen>('lobby');
+  const [matchType, setMatchType] = useState<MatchType>('custom');
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -92,12 +94,12 @@ export default function Home() {
       case 'training':
         return <ScreenTransition key="training"><Training setScreen={setScreen} /></ScreenTransition>;
       case 'match':
-        return <ScreenTransition key="match"><Match setScreen={setScreen} /></ScreenTransition>;
+        return <ScreenTransition key="match"><Match setScreen={setScreen} matchType={matchType} /></ScreenTransition>;
       case 'challenge':
         return <ScreenTransition key="challenge"><Challenge setScreen={setScreen} /></ScreenTransition>;
       case 'lobby':
       default:
-        return <ScreenTransition key="lobby"><Lobby userAddress={userAddress} setScreen={setScreen} /></ScreenTransition>;
+        return <ScreenTransition key="lobby"><Lobby userAddress={userAddress} setScreen={setScreen} setMatchType={setMatchType} /></ScreenTransition>;
     }
   };
 
